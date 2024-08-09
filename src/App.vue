@@ -1,14 +1,22 @@
 <template>
   <div id="app">
 
+    <div class="black-bg" v-if="openModal == true">
+      <div class="white-bg">
+        <h4>상세 페이지</h4>
+        <p>상세 페이지 내용</p>
+        <button @click="openModal = false">닫기</button>
+      </div>
+    </div>
+
     <div class="menu">
       <a v-for="a in menus" :key="a">{{a}}</a>
     </div>
+
     <div>
-      <img src="./assets/room0.jpg" class="room-img">
-      <h4>{{ products[0] }}</h4>
-      <p>50 만원</p>
-      <button @click="report[0] += 1">허위 매물 신고</button> <span>신고 수: {{report[0]}}</span>
+      <img :src="onerooms[0].image" class="room-img" @click="openModal = true">
+      <h4>{{ onerooms[0].title }}</h4>
+      <p>{{ onerooms[0].price }}원</p>
     </div>
     <div>
       <img src="./assets/room1.jpg" class="room-img">
@@ -27,10 +35,14 @@
 
 <script>
 
+import data from './components/oneroom.js';
+
 export default {
   name: 'App',
   data() {
     return {
+      onerooms: data,
+      openModal: false,
       report: [0, 0, 0],
       menus: ['Home', 'Shop', 'About'],
       products: ['역삼동원룸', '천호동원룸', '마포구원룸'],
@@ -46,7 +58,30 @@ export default {
 }
 </script>
 
-<style>
+<style> 
+body {
+  margin: 0;
+}
+
+div {
+  box-sizing: border-box;
+}
+
+.black-bg {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  padding: 20px;
+}
+
+.white-bg {
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+}
+
 .room-img {
   width: 100%;
   margin-top: 40px;
